@@ -3,7 +3,7 @@
 namespace Komunikator1 {
 	System::Void ConversationView::Return_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		main_form = gcnew Main;
+		main_form = gcnew Main(user_database);
 		this->Hide();
 		main_form->ShowDialog();
 		this->Close();

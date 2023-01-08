@@ -1,13 +1,29 @@
 #include "Start.h"
 using namespace System;
 using namespace System::Windows::Forms;
+using namespace System::Data::SQLite;
+using namespace System::Text;
+
 
 [STAThread]
-void Main(array<String^>^ args)
-
+void main(array<String^>^ args)
 {
-	Application::EnableVisualStyles();
-	Application::SetCompatibleTextRenderingDefault(false);
-	Komunikator1::Start form;
-	Application::Run(% form);
+	SQLiteConnection^ db = gcnew SQLiteConnection();
+	UserDatabase^ user_database = gcnew UserDatabase(db);
+	try
+	{
+		db->ConnectionString = "Data Source=example.db;Version=3;New=True;";
+		db->Open();
+
+		Application::EnableVisualStyles();
+		Application::SetCompatibleTextRenderingDefault(false);
+		Komunikator1::Start form(user_database);
+		Application::Run(% form);
+
+		db->Close();
+	}
+	finally
+	{
+		delete (IDisposable^)db;
+	}
 }

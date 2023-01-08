@@ -1,5 +1,6 @@
 #pragma once
 #include "Main.h"
+#include "users.h"
 
 namespace Komunikator1 {
 
@@ -13,11 +14,12 @@ namespace Komunikator1 {
 	/// <summary>
 	/// Summary for Register
 	/// </summary>
+	ref class Register;
 	ref class Start;
 	public ref class Register : public System::Windows::Forms::Form
 	{
 	public:
-		Register()
+		Register(UserDatabase^ u_db) : user_database(u_db)
 		{
 			InitializeComponent();
 			//
@@ -56,6 +58,7 @@ namespace Komunikator1 {
 	private:
 		Main^ main_form;
 		Start^ start_form;
+		UserDatabase^ user_database;
 
 	private:
 		/// <summary>
@@ -191,7 +194,8 @@ namespace Komunikator1 {
 	private: System::Void Back_Click(System::Object^ sender, System::EventArgs^ e);
 		
 	private: System::Void Regg_Click(System::Object^ sender, System::EventArgs^ e) {
-		main_form = gcnew Main;
+		//String^ name = this->Username->Text;
+		main_form = gcnew Main(user_database);
 		this->Hide();
 		main_form->ShowDialog();
 		this->Close();

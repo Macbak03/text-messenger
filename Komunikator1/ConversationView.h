@@ -1,4 +1,5 @@
 #pragma once
+#include "users.h"
 
 
 namespace Komunikator1 {
@@ -13,11 +14,12 @@ namespace Komunikator1 {
 	/// <summary>
 	/// Summary for ConversationView
 	/// </summary>
+	ref class ConversationView;
 	ref class Main;
 	public ref class ConversationView : public System::Windows::Forms::Form
 	{
 	public:
-		ConversationView(void)
+		ConversationView(UserDatabase^ u_db) : user_database(u_db)
 		{
 			InitializeComponent();
 			//
@@ -46,6 +48,7 @@ namespace Komunikator1 {
 
 	private:
 		Main^ main_form;
+		UserDatabase^ user_database;
 
 	private:
 		/// <summary>

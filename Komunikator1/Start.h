@@ -1,6 +1,7 @@
 #pragma once
 #include "Main.h"
 #include "Register.h"
+#include "users.h"
 
 namespace Komunikator1 {
 
@@ -18,7 +19,7 @@ namespace Komunikator1 {
 	public ref class Start : public System::Windows::Forms::Form
 	{
 	public:
-		Start(void)
+		Start(UserDatabase^ u_db) : user_database(u_db)
 		{
 			InitializeComponent();
 			//
@@ -41,8 +42,11 @@ namespace Komunikator1 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::TextBox^ Username;
-	private: System::Windows::Forms::TextBox^ Password;
+	private: System::Windows::Forms::TextBox^ tbUsername;
+	private: System::Windows::Forms::TextBox^ tbPassword;
+	protected:
+
+
 	private: System::Windows::Forms::Button^ Log_in;
 	private: System::Windows::Forms::Button^ Reg;
 
@@ -53,6 +57,8 @@ namespace Komunikator1 {
 	private:
 		Main^ main_form;
 		Register^ register_form;
+		UserDatabase^ user_database;
+
 
 	private:
 		/// <summary>
@@ -67,8 +73,8 @@ namespace Komunikator1 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->Username = (gcnew System::Windows::Forms::TextBox());
-			this->Password = (gcnew System::Windows::Forms::TextBox());
+			this->tbUsername = (gcnew System::Windows::Forms::TextBox());
+			this->tbPassword = (gcnew System::Windows::Forms::TextBox());
 			this->Log_in = (gcnew System::Windows::Forms::Button());
 			this->Reg = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -76,27 +82,30 @@ namespace Komunikator1 {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
-			// Username
+			// tbUsername
 			// 
-			this->Username->Location = System::Drawing::Point(155, 74);
-			this->Username->Name = L"Username";
-			this->Username->Size = System::Drawing::Size(317, 22);
-			this->Username->TabIndex = 0;
+			this->tbUsername->Location = System::Drawing::Point(116, 60);
+			this->tbUsername->Margin = System::Windows::Forms::Padding(2);
+			this->tbUsername->Name = L"tbUsername";
+			this->tbUsername->Size = System::Drawing::Size(239, 20);
+			this->tbUsername->TabIndex = 0;
 			// 
-			// Password
+			// tbPassword
 			// 
-			this->Password->Location = System::Drawing::Point(155, 130);
-			this->Password->Name = L"Password";
-			this->Password->PasswordChar = '*';
-			this->Password->Size = System::Drawing::Size(317, 22);
-			this->Password->TabIndex = 1;
-			this->Password->Tag = L"";
+			this->tbPassword->Location = System::Drawing::Point(116, 106);
+			this->tbPassword->Margin = System::Windows::Forms::Padding(2);
+			this->tbPassword->Name = L"tbPassword";
+			this->tbPassword->PasswordChar = '*';
+			this->tbPassword->Size = System::Drawing::Size(239, 20);
+			this->tbPassword->TabIndex = 1;
+			this->tbPassword->Tag = L"";
 			// 
 			// Log_in
 			// 
-			this->Log_in->Location = System::Drawing::Point(155, 184);
+			this->Log_in->Location = System::Drawing::Point(116, 150);
+			this->Log_in->Margin = System::Windows::Forms::Padding(2);
 			this->Log_in->Name = L"Log_in";
-			this->Log_in->Size = System::Drawing::Size(317, 32);
+			this->Log_in->Size = System::Drawing::Size(238, 26);
 			this->Log_in->TabIndex = 2;
 			this->Log_in->Text = L"Log in";
 			this->Log_in->UseVisualStyleBackColor = true;
@@ -104,9 +113,10 @@ namespace Komunikator1 {
 			// 
 			// Reg
 			// 
-			this->Reg->Location = System::Drawing::Point(222, 231);
+			this->Reg->Location = System::Drawing::Point(166, 188);
+			this->Reg->Margin = System::Windows::Forms::Padding(2);
 			this->Reg->Name = L"Reg";
-			this->Reg->Size = System::Drawing::Size(184, 46);
+			this->Reg->Size = System::Drawing::Size(138, 37);
 			this->Reg->TabIndex = 3;
 			this->Reg->Text = L"Register";
 			this->Reg->UseVisualStyleBackColor = true;
@@ -115,18 +125,20 @@ namespace Komunikator1 {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(152, 55);
+			this->label1->Location = System::Drawing::Point(114, 45);
+			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(101, 16);
+			this->label1->Size = System::Drawing::Size(81, 13);
 			this->label1->TabIndex = 4;
 			this->label1->Text = L"Enter username";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(153, 111);
+			this->label2->Location = System::Drawing::Point(115, 90);
+			this->label2->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(100, 16);
+			this->label2->Size = System::Drawing::Size(80, 13);
 			this->label2->TabIndex = 5;
 			this->label2->Text = L"Enter password";
 			// 
@@ -134,25 +146,27 @@ namespace Komunikator1 {
 			// 
 			this->label3->AutoSize = true;
 			this->label3->ForeColor = System::Drawing::Color::Red;
-			this->label3->Location = System::Drawing::Point(190, 155);
+			this->label3->Location = System::Drawing::Point(142, 126);
+			this->label3->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(247, 16);
+			this->label3->Size = System::Drawing::Size(196, 13);
 			this->label3->TabIndex = 6;
 			this->label3->Text = L"You typed wrong username or password";
 			this->label3->Visible = false;
 			// 
 			// Start
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(646, 346);
+			this->ClientSize = System::Drawing::Size(484, 281);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->Reg);
 			this->Controls->Add(this->Log_in);
-			this->Controls->Add(this->Password);
-			this->Controls->Add(this->Username);
+			this->Controls->Add(this->tbPassword);
+			this->Controls->Add(this->tbUsername);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"Start";
 			this->Text = L"Start";
 			this->ResumeLayout(false);
@@ -161,16 +175,39 @@ namespace Komunikator1 {
 		}
 #pragma endregion
 	private: System::Void Reg_Click(System::Object^ sender, System::EventArgs^ e) {
-		register_form = gcnew Register;
+		register_form = gcnew Register(user_database);
 		this->Hide();
 		register_form->ShowDialog();
 		this->Close();
 	}
 	private: System::Void Log_in_Click(System::Object^ sender, System::EventArgs^ e) {
-		main_form = gcnew Main;
-		this->Hide();
-		main_form->ShowDialog();
-		this->Close();
+		String^ user_name = this->tbUsername->Text;
+		String^ password = this->tbPassword->Text;
+		if (user_name->Length == 0 || password->Length == 0)
+		{
+			MessageBox::Show("Please enter your login and password", "Login or passsword are empty", MessageBoxButtons::OK);
+			return;
+		}
+		try
+		{
+			User user;
+			if (user_database->find_user(user_name, password, user))
+			{
+				main_form = gcnew Main(user_database);
+				this->Hide();
+				main_form->ShowDialog();
+				this->Close();
+			}
+			else
+			{
+				this->label3->Visible = true;
+			}
+		}
+		catch(Exception^ e)
+		{
+			MessageBox::Show(e->Message, "Database error", MessageBoxButtons::OK);
+		}
+		
 	}
 	};
 }

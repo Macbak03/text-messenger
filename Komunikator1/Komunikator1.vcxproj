@@ -74,16 +74,18 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)messages;$(ProjectDir)users;$(ProjectDir)SQLite;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>C:\Users\MB\source\repos\Komunikator1\Komunikator1\sqlite3.lib</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
-      <EntryPointSymbol>Main</EntryPointSymbol>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -116,6 +118,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>Externals\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
@@ -125,8 +130,10 @@
   <ItemGroup>
     <ClCompile Include="ConversationView.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="messages\messages.cpp" />
     <ClCompile Include="Register.cpp" />
     <ClCompile Include="Start.cpp" />
+    <ClCompile Include="users\users.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConversationView.h">
@@ -135,12 +142,14 @@
     <ClInclude Include="Main.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="messages\messages.h" />
     <ClInclude Include="Register.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Start.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="users\users.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Start.resx">
@@ -165,6 +174,9 @@
       <DependentUpon>ConversationView.h</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

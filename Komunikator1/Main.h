@@ -1,5 +1,6 @@
 #pragma once
 #include "ConversationView.h"
+#include "users.h"
 
 namespace Komunikator1 {
 
@@ -13,11 +14,12 @@ namespace Komunikator1 {
 	/// <summary>
 	/// Summary for Main
 	/// </summary>
+	ref class Main;
 	ref class Start;
 	public ref class Main : public System::Windows::Forms::Form
 	{
 	public:
-		Main(void)
+		Main(UserDatabase^ u_db) : user_database(u_db)
 		{
 			InitializeComponent();
 			//
@@ -46,6 +48,7 @@ namespace Komunikator1 {
 	private:
 		Start^ start_form;
 		ConversationView^ convo_form;
+		UserDatabase^ user_database;
 
 	private:
 		/// <summary>
@@ -146,7 +149,7 @@ namespace Komunikator1 {
 	private: System::Void LogOut_Click(System::Object^ sender, System::EventArgs^ e);
 
 	private: System::Void Select_Click(System::Object^ sender, System::EventArgs^ e) {
-		convo_form = gcnew ConversationView;
+		convo_form = gcnew ConversationView(user_database);
 		this->Hide();
 		convo_form->ShowDialog();
 		this->Close();
