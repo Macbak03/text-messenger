@@ -39,9 +39,9 @@ namespace Komunikator1 {
 			}
 		}
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ Search_for_user;
+	private: System::Windows::Forms::TextBox^ tbSearch_for_user;
 	private: System::Windows::Forms::Button^ LogOut;
-	private: System::Windows::Forms::ListBox^ ChooseFromUsers;
+	private: System::Windows::Forms::ListBox^ tbChooseFromUsers;
 	private: System::Windows::Forms::Button^ Select;
 	private: System::Windows::Forms::Label^ label2;
 
@@ -64,9 +64,9 @@ namespace Komunikator1 {
 		void InitializeComponent(void)
 		{
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->Search_for_user = (gcnew System::Windows::Forms::TextBox());
+			this->tbSearch_for_user = (gcnew System::Windows::Forms::TextBox());
 			this->LogOut = (gcnew System::Windows::Forms::Button());
-			this->ChooseFromUsers = (gcnew System::Windows::Forms::ListBox());
+			this->tbChooseFromUsers = (gcnew System::Windows::Forms::ListBox());
 			this->Select = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
@@ -82,10 +82,10 @@ namespace Komunikator1 {
 			// 
 			// Search_for_user
 			// 
-			this->Search_for_user->Location = System::Drawing::Point(121, 31);
-			this->Search_for_user->Name = L"Search_for_user";
-			this->Search_for_user->Size = System::Drawing::Size(286, 22);
-			this->Search_for_user->TabIndex = 1;
+			this->tbSearch_for_user->Location = System::Drawing::Point(121, 31);
+			this->tbSearch_for_user->Name = L"tbSearch_for_user";
+			this->tbSearch_for_user->Size = System::Drawing::Size(286, 22);
+			this->tbSearch_for_user->TabIndex = 1;
 			// 
 			// LogOut
 			// 
@@ -99,13 +99,13 @@ namespace Komunikator1 {
 			// 
 			// ChooseFromUsers
 			// 
-			this->ChooseFromUsers->FormattingEnabled = true;
-			this->ChooseFromUsers->ItemHeight = 16;
-			this->ChooseFromUsers->Items->AddRange(gcnew cli::array< System::Object^  >(5) { L"User1", L"User2", L"User3", L"User4", L"User5" });
-			this->ChooseFromUsers->Location = System::Drawing::Point(83, 98);
-			this->ChooseFromUsers->Name = L"ChooseFromUsers";
-			this->ChooseFromUsers->Size = System::Drawing::Size(361, 228);
-			this->ChooseFromUsers->TabIndex = 3;
+			this->tbChooseFromUsers->FormattingEnabled = true;
+			this->tbChooseFromUsers->ItemHeight = 16;
+			this->tbChooseFromUsers->Items->AddRange(gcnew cli::array< System::Object^  >(5) { L"User1", L"User2", L"User3", L"User4", L"User5" });
+			this->tbChooseFromUsers->Location = System::Drawing::Point(83, 98);
+			this->tbChooseFromUsers->Name = L"tbChooseFromUsers";
+			this->tbChooseFromUsers->Size = System::Drawing::Size(361, 228);
+			this->tbChooseFromUsers->TabIndex = 3;
 			// 
 			// Select
 			// 
@@ -134,9 +134,9 @@ namespace Komunikator1 {
 			this->ClientSize = System::Drawing::Size(600, 434);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->Select);
-			this->Controls->Add(this->ChooseFromUsers);
+			this->Controls->Add(this->tbChooseFromUsers);
 			this->Controls->Add(this->LogOut);
-			this->Controls->Add(this->Search_for_user);
+			this->Controls->Add(this->tbSearch_for_user);
 			this->Controls->Add(this->label1);
 			this->Name = L"Main";
 			this->Text = L"Main";

@@ -38,12 +38,12 @@ namespace Komunikator1 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::RichTextBox^ Message;
+	private: System::Windows::Forms::RichTextBox^ tbMessage;
 
 	protected:
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ Return;
-	private: System::Windows::Forms::RichTextBox^ Conversation;
+	private: System::Windows::Forms::RichTextBox^ tbConversation;
 	private: System::Windows::Forms::Label^ label2;
 
 	private:
@@ -63,21 +63,21 @@ namespace Komunikator1 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->Message = (gcnew System::Windows::Forms::RichTextBox());
+			this->tbMessage = (gcnew System::Windows::Forms::RichTextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->Return = (gcnew System::Windows::Forms::Button());
-			this->Conversation = (gcnew System::Windows::Forms::RichTextBox());
+			this->tbConversation = (gcnew System::Windows::Forms::RichTextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// Message
 			// 
-			this->Message->Location = System::Drawing::Point(119, 286);
-			this->Message->Name = L"Message";
-			this->Message->Size = System::Drawing::Size(428, 101);
-			this->Message->TabIndex = 0;
-			this->Message->Text = L"";
-			this->Message->TextChanged += gcnew System::EventHandler(this, &ConversationView::richTextBox1_TextChanged);
+			this->tbMessage->Location = System::Drawing::Point(119, 286);
+			this->tbMessage->Name = L"tbMessage";
+			this->tbMessage->Size = System::Drawing::Size(428, 101);
+			this->tbMessage->TabIndex = 0;
+			this->tbMessage->Text = L"";
+			this->tbMessage->TextChanged += gcnew System::EventHandler(this, &ConversationView::richTextBox1_TextChanged);
 			// 
 			// label1
 			// 
@@ -100,13 +100,13 @@ namespace Komunikator1 {
 			// 
 			// Conversation
 			// 
-			this->Conversation->Enabled = false;
-			this->Conversation->Location = System::Drawing::Point(119, 54);
-			this->Conversation->Name = L"Conversation";
-			this->Conversation->ReadOnly = true;
-			this->Conversation->Size = System::Drawing::Size(428, 191);
-			this->Conversation->TabIndex = 3;
-			this->Conversation->Text = L"";
+			this->tbConversation->Enabled = false;
+			this->tbConversation->Location = System::Drawing::Point(119, 54);
+			this->tbConversation->Name = L"tbConversation";
+			this->tbConversation->ReadOnly = true;
+			this->tbConversation->Size = System::Drawing::Size(428, 191);
+			this->tbConversation->TabIndex = 3;
+			this->tbConversation->Text = L"";
 			// 
 			// label2
 			// 
@@ -123,10 +123,10 @@ namespace Komunikator1 {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(679, 439);
 			this->Controls->Add(this->label2);
-			this->Controls->Add(this->Conversation);
+			this->Controls->Add(this->tbConversation);
 			this->Controls->Add(this->Return);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->Message);
+			this->Controls->Add(this->tbMessage);
 			this->Name = L"ConversationView";
 			this->Text = L"ConversationView";
 			this->ResumeLayout(false);

@@ -1,6 +1,7 @@
 #pragma once
 #include "Main.h"
 #include "users.h"
+#include <msclr\marshal_cppstd.h>
 
 namespace Komunikator1 {
 
@@ -10,6 +11,7 @@ namespace Komunikator1 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace msclr::interop;
 
 	/// <summary>
 	/// Summary for Register
@@ -39,17 +41,17 @@ namespace Komunikator1 {
 			}
 		}
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ name;
+	private: System::Windows::Forms::TextBox^ tbName;
 	protected:
 
 	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::TextBox^ surname;
+	private: System::Windows::Forms::TextBox^ tbSurname;
 
 	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ login;
+	private: System::Windows::Forms::TextBox^ tbLogin;
 
 	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::TextBox^ password;
+	private: System::Windows::Forms::TextBox^ tbPassword;
 
 	private: System::Windows::Forms::Button^ Regg;
 
@@ -74,13 +76,13 @@ namespace Komunikator1 {
 		void InitializeComponent(void)
 		{
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->name = (gcnew System::Windows::Forms::TextBox());
+			this->tbName = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->surname = (gcnew System::Windows::Forms::TextBox());
+			this->tbSurname = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->login = (gcnew System::Windows::Forms::TextBox());
+			this->tbLogin = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->password = (gcnew System::Windows::Forms::TextBox());
+			this->tbPassword = (gcnew System::Windows::Forms::TextBox());
 			this->Regg = (gcnew System::Windows::Forms::Button());
 			this->Back = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
@@ -94,12 +96,12 @@ namespace Komunikator1 {
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Name";
 			// 
-			// name
+			// tbName
 			// 
-			this->name->Location = System::Drawing::Point(123, 47);
-			this->name->Name = L"name";
-			this->name->Size = System::Drawing::Size(291, 22);
-			this->name->TabIndex = 1;
+			this->tbName->Location = System::Drawing::Point(123, 47);
+			this->tbName->Name = L"tbName";
+			this->tbName->Size = System::Drawing::Size(291, 22);
+			this->tbName->TabIndex = 1;
 			// 
 			// label2
 			// 
@@ -110,12 +112,12 @@ namespace Komunikator1 {
 			this->label2->TabIndex = 2;
 			this->label2->Text = L"Surname";
 			// 
-			// surname
+			// tbSurname
 			// 
-			this->surname->Location = System::Drawing::Point(123, 100);
-			this->surname->Name = L"surname";
-			this->surname->Size = System::Drawing::Size(291, 22);
-			this->surname->TabIndex = 3;
+			this->tbSurname->Location = System::Drawing::Point(123, 100);
+			this->tbSurname->Name = L"tbSurname";
+			this->tbSurname->Size = System::Drawing::Size(291, 22);
+			this->tbSurname->TabIndex = 3;
 			// 
 			// label3
 			// 
@@ -126,12 +128,12 @@ namespace Komunikator1 {
 			this->label3->TabIndex = 4;
 			this->label3->Text = L"Login";
 			// 
-			// login
+			// tbLogin
 			// 
-			this->login->Location = System::Drawing::Point(123, 154);
-			this->login->Name = L"login";
-			this->login->Size = System::Drawing::Size(291, 22);
-			this->login->TabIndex = 5;
+			this->tbLogin->Location = System::Drawing::Point(123, 154);
+			this->tbLogin->Name = L"tbLogin";
+			this->tbLogin->Size = System::Drawing::Size(291, 22);
+			this->tbLogin->TabIndex = 5;
 			// 
 			// label4
 			// 
@@ -142,12 +144,12 @@ namespace Komunikator1 {
 			this->label4->TabIndex = 6;
 			this->label4->Text = L"Password";
 			// 
-			// password
+			// tbPassword
 			// 
-			this->password->Location = System::Drawing::Point(123, 208);
-			this->password->Name = L"password";
-			this->password->Size = System::Drawing::Size(291, 22);
-			this->password->TabIndex = 7;
+			this->tbPassword->Location = System::Drawing::Point(123, 208);
+			this->tbPassword->Name = L"tbPassword";
+			this->tbPassword->Size = System::Drawing::Size(291, 22);
+			this->tbPassword->TabIndex = 7;
 			// 
 			// Regg
 			// 
@@ -176,13 +178,13 @@ namespace Komunikator1 {
 			this->ClientSize = System::Drawing::Size(558, 366);
 			this->Controls->Add(this->Back);
 			this->Controls->Add(this->Regg);
-			this->Controls->Add(this->password);
+			this->Controls->Add(this->tbPassword);
 			this->Controls->Add(this->label4);
-			this->Controls->Add(this->login);
+			this->Controls->Add(this->tbLogin);
 			this->Controls->Add(this->label3);
-			this->Controls->Add(this->surname);
+			this->Controls->Add(this->tbSurname);
 			this->Controls->Add(this->label2);
-			this->Controls->Add(this->name);
+			this->Controls->Add(this->tbName);
 			this->Controls->Add(this->label1);
 			this->Name = L"Register";
 			this->Text = L"Register";
@@ -194,11 +196,34 @@ namespace Komunikator1 {
 	private: System::Void Back_Click(System::Object^ sender, System::EventArgs^ e);
 		
 	private: System::Void Regg_Click(System::Object^ sender, System::EventArgs^ e) {
-		//String^ name = this->Username->Text;
-		main_form = gcnew Main(user_database);
-		this->Hide();
-		main_form->ShowDialog();
-		this->Close();
+		System::String^ name = this->tbName->Text;
+		System::String^ surname = this->tbSurname->Text;
+		System::String^ login = this->tbLogin->Text;
+		System::String^ password = this->tbPassword->Text;
+		if (name->Length == 0 || surname->Length == 0 || login->Length == 0 || password->Length == 0)
+		{
+			MessageBox::Show("Please enter necessary data", "Some of the fields are empty", MessageBoxButtons::OK);
+			return;
+		}
+		try
+		{
+			User user;
+			user.name = marshal_as<std::string>(name);
+			user.surname = marshal_as<std::string>(surname);
+			user.login = marshal_as<std::string>(login);
+			user.password = marshal_as<std::string>(password);
+			user_database->save_user(user);
+			main_form = gcnew Main(user_database);
+			this->Hide();
+			main_form->ShowDialog();
+			this->Close();
+
+		}
+		catch (Exception^ e)
+		{
+			MessageBox::Show(e->Message, "Database error", MessageBoxButtons::OK);
+		}
+	
 	}
 	};
 }
