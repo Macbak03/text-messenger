@@ -190,7 +190,7 @@ namespace Komunikator1 {
 		}
 		try
 		{
-			User user;
+			User^ user = gcnew User;
 			if (user_database->find_user(user_name, password, user))
 			{
 				main_form = gcnew Main(user_database);

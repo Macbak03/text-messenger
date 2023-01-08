@@ -207,11 +207,11 @@ namespace Komunikator1 {
 		}
 		try
 		{
-			User user;
-			user.name = marshal_as<std::string>(name);
-			user.surname = marshal_as<std::string>(surname);
-			user.login = marshal_as<std::string>(login);
-			user.password = marshal_as<std::string>(password);
+			User^ user = gcnew User;
+			user->name = name;
+			user->surname = surname;
+			user->login = login;
+			user->password = password;
 			user_database->save_user(user);
 			main_form = gcnew Main(user_database);
 			this->Hide();

@@ -21,7 +21,7 @@ void UserDatabase::create_user_table() {
 }
 
 
-bool UserDatabase::find_user(System::String^ login, System::String^ password, User &user) {
+bool UserDatabase::find_user(System::String^ login, System::String^ password, User ^user) {
     System::String^ sql = "select * from users "
                  "where login = '" +
                  login +
@@ -34,10 +34,10 @@ bool UserDatabase::find_user(System::String^ login, System::String^ password, Us
     
     if (rdr->Read())
     {
-        user.login = marshal_as<std::string>(rdr->GetString(0));
-        user.password = marshal_as<std::string>(rdr->GetString(1));
-        user.name = marshal_as<std::string>(rdr->GetString(2));
-        user.surname = marshal_as<std::string>(rdr->GetString(3));
+        user->login = rdr->GetString(0);
+        user->password = rdr->GetString(1);
+        user->name = rdr->GetString(2);
+        user->surname = rdr->GetString(3);
         return true;
     }
     else
@@ -46,10 +46,9 @@ bool UserDatabase::find_user(System::String^ login, System::String^ password, Us
     }
 }
 
-User UserDatabase::save_user(User user) {
-    string raw_sql = "insert into users values('" + user.login + "', '" + user.password + "', '" + user.name + "', '" +
-                 user.surname + "');";
-    System::String^ sql = gcnew System::String(raw_sql.c_str());
+User^ UserDatabase::save_user(User^ user) {
+    System::String^ sql = "insert into users values('" + user->login + "', '" + user->password + "', '" + user->name + "', '" +
+                 user->surname + "');";
     SQLiteCommand exec(sql, DB);
     exec.ExecuteNonQuery();
     return user;
