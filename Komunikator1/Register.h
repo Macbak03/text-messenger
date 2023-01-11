@@ -13,6 +13,7 @@ namespace Komunikator1 {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace msclr::interop;
+	
 
 	/// <summary>
 	/// Summary for Register
@@ -22,7 +23,7 @@ namespace Komunikator1 {
 	public ref class Register : public System::Windows::Forms::Form
 	{
 	public:
-		Register(UserDatabase^ u_db) : user_database(u_db)
+		Register(UserDatabase^ u_db, MessageDatabase^ m_db) : user_database(u_db), message_database(m_db)
 		{
 			InitializeComponent();
 			//
@@ -63,7 +64,7 @@ namespace Komunikator1 {
 		Start^ start_form;
 		UserDatabase^ user_database;
 		MessageDatabase^ message_database;
-
+		
 
 	private:
 		/// <summary>

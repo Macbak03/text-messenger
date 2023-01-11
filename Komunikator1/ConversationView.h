@@ -1,6 +1,7 @@
 #pragma once
 #include "users.h"
 #include "messages.h"
+#include <msclr\marshal_cppstd.h>
 
 
 namespace Komunikator1 {
@@ -11,6 +12,8 @@ namespace Komunikator1 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	
+
 
 	/// <summary>
 	/// Summary for ConversationView
@@ -20,13 +23,22 @@ namespace Komunikator1 {
 	public ref class ConversationView : public System::Windows::Forms::Form
 	{
 	public:
-		ConversationView(UserDatabase^ u_db, User^ user) : user_database(u_db), user(user)
+		ConversationView(UserDatabase^ u_db, MessageDatabase^ m_db, User^ user, System::String^ ilc) : user_database(u_db), message_database(m_db), user(user), interlocutor(ilc)
 		{
 			InitializeComponent();
+			List<UserMessage^>^ messages = message_database->get_messages(user->login, ilc);
+			for each (UserMessage ^ message in messages)
+				this->lbConversation->Items->Add(message->message+"\n");
 			//
 			//TODO: Add the constructor code here
 			//
 		}
+	private: System::Windows::Forms::Button^ Send;
+	private: System::Windows::Forms::TextBox^ tbMessage;
+	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Button^ Return;
+	private: System::Windows::Forms::ListBox^ lbConversation;
+	private: System::Windows::Forms::Label^ label2;
 
 	protected:
 		/// <summary>
@@ -39,19 +51,14 @@ namespace Komunikator1 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::RichTextBox^ tbMessage;
-
-	protected:
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Button^ Return;
-	private: System::Windows::Forms::RichTextBox^ tbConversation;
-	private: System::Windows::Forms::Label^ label2;
 
 	private:
 		Main^ main_form;
 		UserDatabase^ user_database;
 		MessageDatabase^ message_database;
 		User^ user;
+		System::String^ interlocutor;
+
 
 	private:
 		/// <summary>
@@ -66,70 +73,76 @@ namespace Komunikator1 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->tbMessage = (gcnew System::Windows::Forms::RichTextBox());
+			this->tbMessage = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->Return = (gcnew System::Windows::Forms::Button());
-			this->tbConversation = (gcnew System::Windows::Forms::RichTextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->Send = (gcnew System::Windows::Forms::Button());
+			this->lbConversation = (gcnew System::Windows::Forms::ListBox());
 			this->SuspendLayout();
-			// 
-			// Message
-			// 
-			this->tbMessage->Location = System::Drawing::Point(119, 286);
+			//tbMessage
+			this->tbMessage->Location = System::Drawing::Point(89, 220);
+			this->tbMessage->Margin = System::Windows::Forms::Padding(2);
+			this->tbMessage->Multiline = true;
 			this->tbMessage->Name = L"tbMessage";
-			this->tbMessage->Size = System::Drawing::Size(428, 101);
+			this->tbMessage->Size = System::Drawing::Size(322, 43);
 			this->tbMessage->TabIndex = 0;
-			this->tbMessage->Text = L"";
-			this->tbMessage->TextChanged += gcnew System::EventHandler(this, &ConversationView::richTextBox1_TextChanged);
-			// 
-			// label1
-			// 
+			this->tbMessage->TextChanged += gcnew System::EventHandler(this, &ConversationView::tbMessage_change_text);
+			//label1
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(286, 267);
+			this->label1->Location = System::Drawing::Point(217, 205);
+			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(99, 16);
+			this->label1->Size = System::Drawing::Size(76, 13);
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"Type message";
-			// 
-			// Return
-			// 
-			this->Return->Location = System::Drawing::Point(12, 12);
+			//Return
+			this->Return->Location = System::Drawing::Point(9, 10);
+			this->Return->Margin = System::Windows::Forms::Padding(2);
 			this->Return->Name = L"Return";
-			this->Return->Size = System::Drawing::Size(106, 32);
+			this->Return->Size = System::Drawing::Size(80, 26);
 			this->Return->TabIndex = 2;
 			this->Return->Text = L"Return";
 			this->Return->UseVisualStyleBackColor = true;
 			this->Return->Click += gcnew System::EventHandler(this, &ConversationView::Return_Click);
-			// 
-			// Conversation
-			// 
-			this->tbConversation->Enabled = false;
-			this->tbConversation->Location = System::Drawing::Point(119, 54);
-			this->tbConversation->Name = L"tbConversation";
-			this->tbConversation->ReadOnly = true;
-			this->tbConversation->Size = System::Drawing::Size(428, 191);
-			this->tbConversation->TabIndex = 3;
-			this->tbConversation->Text = L"";
-			// 
-			// label2
-			// 
+			//label2
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(299, 35);
+			this->label2->Location = System::Drawing::Point(224, 28);
+			this->label2->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(86, 16);
+			this->label2->Size = System::Drawing::Size(69, 13);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"Conversation";
-			// 
-			// ConversationView
-			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			//Send
+			this->Send->Location = System::Drawing::Point(199, 268);
+			this->Send->Name = L"Send";
+			this->Send->Size = System::Drawing::Size(110, 36);
+			this->Send->TabIndex = 2;
+			this->Send->Text = L"Send";
+			this->Send->UseVisualStyleBackColor = true;
+			this->Send->Enabled = false;
+			this->Send->Click += gcnew System::EventHandler(this, &ConversationView::Send_Click);
+			//lbConversation
+			this->lbConversation->ColumnWidth = 15;
+			this->lbConversation->FormattingEnabled = true;
+			this->lbConversation->HorizontalScrollbar = true;
+			this->lbConversation->Location = System::Drawing::Point(89, 44);
+			this->lbConversation->Name = L"lbConversation";
+			this->lbConversation->ScrollAlwaysVisible = true;
+			this->lbConversation->SelectionMode = System::Windows::Forms::SelectionMode::None;
+			this->lbConversation->Size = System::Drawing::Size(322, 147);
+			this->lbConversation->TabIndex = 5;
+			//ConversationView
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(679, 439);
+			this->ClientSize = System::Drawing::Size(509, 357);
+			this->Controls->Add(this->lbConversation);
+			this->Controls->Add(this->Send);
 			this->Controls->Add(this->label2);
-			this->Controls->Add(this->tbConversation);
 			this->Controls->Add(this->Return);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->tbMessage);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"ConversationView";
 			this->Text = L"ConversationView";
 			this->ResumeLayout(false);
@@ -137,9 +150,39 @@ namespace Komunikator1 {
 
 		}
 #pragma endregion
-	private: System::Void richTextBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void TextBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void Return_Click(System::Object^ sender, System::EventArgs^ e);
-
+	private: System::Void tbMessage_change_text(System::Object^ sender, System::EventArgs^ e)
+	{
+		System::String^ mess = this->tbMessage->Text;
+		if (System::String::IsNullOrEmpty(mess))
+		{
+			this->Send->Enabled = false;
+		}
+		else
+		{
+			this->Send->Enabled = true;
+		}
+	}
+	private: System::Void Send_Click(System::Object^ sender, System::EventArgs^ e) {
+		System::String^ mess = this->tbMessage->Text;
+		try
+		{
+			DateTime DateTimeNow = DateTime::Now;
+			System::String^ date = DateTimeNow.ToShortDateString() + " " + DateTimeNow.ToShortTimeString();
+			UserMessage^ user_message = gcnew UserMessage;
+			user_message->message = mess;
+			user_message->recipient = interlocutor;
+			user_message->sender = user->login;
+			user_message->date = date;
+			message_database->save_message(user_message);
+			
+		}
+		catch (Exception^ e)
+		{
+			MessageBox::Show(e->Message, "Database error", MessageBoxButtons::OK);
+		}
+	}
 };
 }

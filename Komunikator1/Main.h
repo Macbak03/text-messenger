@@ -57,7 +57,7 @@ namespace Komunikator1 {
 		UserDatabase^ user_database;
 		MessageDatabase^ message_database;
 		User^ user;
-	
+		
 
 	private:
 		/// <summary>
@@ -111,6 +111,8 @@ namespace Komunikator1 {
 			this->tbChooseFromUsers->Name = L"tbChooseFromUsers";
 			this->tbChooseFromUsers->Size = System::Drawing::Size(272, 186);
 			this->tbChooseFromUsers->TabIndex = 3;
+			this->tbChooseFromUsers->DoubleClick += gcnew System::EventHandler(this, &Main::tbChooseFromUsers_DoubleClick);
+			this->tbChooseFromUsers->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::tbChooseFromUsers_SelectedIndexChanged);
 			//Select
 			this->Select->Enabled = false;
 			this->Select->Location = System::Drawing::Point(137, 299);
@@ -161,7 +163,8 @@ namespace Komunikator1 {
 	private: System::Void LogOut_Click(System::Object^ sender, System::EventArgs^ e);
 
 	private: System::Void Select_Click(System::Object^ sender, System::EventArgs^ e) {
-		convo_form = gcnew ConversationView(user_database, user);
+		System::String^ interlocutor = (System::String^)(this->tbChooseFromUsers->SelectedItem);
+		convo_form = gcnew ConversationView(user_database, message_database, user, interlocutor);
 		this->Hide();
 		convo_form->ShowDialog();
 		this->Close();
@@ -180,7 +183,6 @@ namespace Komunikator1 {
 	}
 	private: System::Void Add_Click(System::Object^ sender, System::EventArgs^ e) {
 		System::String^ add = this->tbAddUser->Text;
-		
 		try
 		{
 			User^ user = gcnew User;
@@ -197,6 +199,17 @@ namespace Komunikator1 {
 		{
 			MessageBox::Show(e->Message, "Database error", MessageBoxButtons::OK);
 		}
+	}
+	private: System::Void tbChooseFromUsers_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		if (tbChooseFromUsers->SelectedItems->Count > 0)
+		{
+			Select->Enabled = true;
+		}
+	}
+	private: System::Void tbChooseFromUsers_DoubleClick(System::Object^ sender,System::EventArgs^ e)
+	{
+		Select_Click(sender, e);
 	}
 };
 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <list>
 
 using namespace System::Data::SQLite;
 using namespace System::Text;

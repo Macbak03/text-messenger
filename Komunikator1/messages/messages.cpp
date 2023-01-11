@@ -26,7 +26,7 @@ void MessageDatabase::create_message_table() {
     exec.ExecuteNonQuery();
 }
 
-Message^ MessageDatabase::save_message(Message^ message) {
+UserMessage^ MessageDatabase::save_message(UserMessage^ message) {
     System::String^ sql = "insert into messages values('" + message->sender + "', '" + message->recipient + "', '" + message->message + "', '" +
                  message->date + "');";
     SQLiteCommand exec(sql, DB);
@@ -34,7 +34,7 @@ Message^ MessageDatabase::save_message(Message^ message) {
     return message;
 }
 
-List<Message^>^ MessageDatabase::get_messages(System::String^ user, System::String^ interlocutor) {
+List<UserMessage^>^ MessageDatabase::get_messages(System::String^ user, System::String^ interlocutor) {
     System::String^ sql = "SELECT * FROM MESSAGES "
                  "where sender = '" +
                  user +
@@ -50,10 +50,10 @@ List<Message^>^ MessageDatabase::get_messages(System::String^ user, System::Stri
                  "';";
     SQLiteCommand exec(sql, DB);
     SQLiteDataReader^ rdr = exec.ExecuteReader();
-    List<Message^>^ messages;
+    List<UserMessage^>^ messages = gcnew List<UserMessage^>;
     while (rdr->Read())
     {
-        Message^ message;
+        UserMessage^ message = gcnew UserMessage;
         message->sender = rdr->GetString(0);
         message->recipient = rdr->GetString(1);
         message->message = rdr->GetString(2);

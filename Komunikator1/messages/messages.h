@@ -1,12 +1,12 @@
 #pragma once
 
 #include <string>
-#include <vector>
+#include <list>
 using namespace System::Data::SQLite;
 using namespace System::Text;
 using namespace System::Collections::Generic;
 
-public ref struct Message {
+public ref struct UserMessage {
     System::String^ sender;
     System::String^ recipient;
     System::String^ message;
@@ -20,7 +20,7 @@ private:
 public:
     explicit MessageDatabase(SQLiteConnection^db);
     void create_message_table();
-    Message^ save_message(Message^ message);
-    List <Message^>^ get_messages(System::String^ user, System::String^ interlocutor);
+    UserMessage^ save_message(UserMessage^ message);
+    List <UserMessage^>^ get_messages(System::String^ user, System::String^ interlocutor);
     List <System::String^>^ get_interlocutors(System::String^ user);
 };

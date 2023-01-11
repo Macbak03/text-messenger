@@ -13,7 +13,7 @@ void main(array<String^>^ args)
 	MessageDatabase^ message_database = gcnew MessageDatabase(db);
 	try
 	{
-		db->ConnectionString = "Data Source=example.db;Version=3;New=True;";
+		db->ConnectionString = "Data Source=example.db;Version=3;New=True;foreign keys=true";
 		db->Open();
 		user_database->create_user_table();
 		message_database->create_message_table();

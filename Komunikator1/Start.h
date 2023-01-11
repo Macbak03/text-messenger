@@ -12,6 +12,7 @@ namespace Komunikator1 {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	
+	
 
 	/// <summary>
 	/// Summary for Start
@@ -59,7 +60,7 @@ namespace Komunikator1 {
 		Register^ register_form;
 		UserDatabase^ user_database;
 		MessageDatabase^ message_database;
-
+	
 
 	private:
 		/// <summary>
@@ -176,7 +177,7 @@ namespace Komunikator1 {
 		}
 #pragma endregion
 	private: System::Void Reg_Click(System::Object^ sender, System::EventArgs^ e) {
-		register_form = gcnew Register(user_database);
+		register_form = gcnew Register(user_database, message_database);
 		this->Hide();
 		register_form->ShowDialog();
 		this->Close();
