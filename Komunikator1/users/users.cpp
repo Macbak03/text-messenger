@@ -7,8 +7,9 @@ using namespace std;
 using namespace System::Data::SQLite;
 using namespace System::Text;
 using namespace msclr::interop;
+using namespace System::Collections::Generic;
 
-UserDatabase::UserDatabase(SQLiteConnection^db) : DB(db) {}
+UserDatabase::UserDatabase(SQLiteConnection^ db) : DB(db) {}
 
 void UserDatabase::create_user_table() {
     System::String^ sql = "CREATE TABLE IF NOT EXISTS USERS("
@@ -21,7 +22,7 @@ void UserDatabase::create_user_table() {
 }
 
 
-bool UserDatabase::find_user(System::String^ login, System::String^ password, User ^user) {
+bool UserDatabase::find_user(System::String^ login, System::String^ password, User^ user) {
     System::String^ sql = "select * from users "
                  "where login = '" +
                  login +
@@ -52,4 +53,27 @@ User^ UserDatabase::save_user(User^ user) {
     SQLiteCommand exec(sql, DB);
     exec.ExecuteNonQuery();
     return user;
+}
+
+bool UserDatabase::find_user(System::String^ login, User^ user)
+{
+    System::String^ sql = "select * from users "
+        "where login = '" +
+        login +
+        "'; ";
+    SQLiteCommand exec(sql, DB);
+    SQLiteDataReader^ rdr = exec.ExecuteReader();
+    if (rdr->Read())
+    {
+        user->login = rdr->GetString(0);
+        user->password = rdr->GetString(1);
+        user->name = rdr->GetString(2);
+        user->surname = rdr->GetString(3);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+    
 }

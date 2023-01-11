@@ -1,9 +1,11 @@
 #pragma once
 
-#include<string>
+#include <string>
+#include <list>
 
 using namespace System::Data::SQLite;
 using namespace System::Text;
+using namespace System::Collections::Generic;
 
 public ref struct User {
     System::String^ login;
@@ -24,5 +26,7 @@ public:
     bool find_user(System::String^ login, System::String^ password, User^ user);
 
     User^ save_user(User^ user);
+
+    bool find_user(System::String^ login, User^ user);
 };
 

@@ -4,22 +4,23 @@
 #include <vector>
 using namespace System::Data::SQLite;
 using namespace System::Text;
+using namespace System::Collections::Generic;
 
-struct Message {
-    std::string sender;
-    std::string recipient;
-    std::string message;
-    std::string date;
+public ref struct Message {
+    System::String^ sender;
+    System::String^ recipient;
+    System::String^ message;
+    System::String^ date;
 };
 
-ref class MessageDatabase {
+public ref class MessageDatabase {
 private:
     SQLiteConnection^DB;
 
 public:
     explicit MessageDatabase(SQLiteConnection^db);
     void create_message_table();
-    Message save_message(Message message);
-    std::vector <Message> get_messages(const std::string& user, const std::string& interlocutor);
-    std::vector <std::string> get_interlocutors(const std::string& user);
+    Message^ save_message(Message^ message);
+    List <Message^>^ get_messages(System::String^ user, System::String^ interlocutor);
+    List <System::String^>^ get_interlocutors(System::String^ user);
 };

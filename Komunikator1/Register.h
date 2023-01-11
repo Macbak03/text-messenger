@@ -1,6 +1,7 @@
 #pragma once
 #include "Main.h"
 #include "users.h"
+#include "messages.h"
 #include <msclr\marshal_cppstd.h>
 
 namespace Komunikator1 {
@@ -61,6 +62,8 @@ namespace Komunikator1 {
 		Main^ main_form;
 		Start^ start_form;
 		UserDatabase^ user_database;
+		MessageDatabase^ message_database;
+
 
 	private:
 		/// <summary>
@@ -213,7 +216,7 @@ namespace Komunikator1 {
 			user->login = login;
 			user->password = password;
 			user_database->save_user(user);
-			main_form = gcnew Main(user_database);
+			main_form = gcnew Main(user_database, message_database, user);
 			this->Hide();
 			main_form->ShowDialog();
 			this->Close();

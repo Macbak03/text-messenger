@@ -19,7 +19,7 @@ namespace Komunikator1 {
 	public ref class Start : public System::Windows::Forms::Form
 	{
 	public:
-		Start(UserDatabase^ u_db) : user_database(u_db)
+		Start(UserDatabase^ u_db, MessageDatabase^ m_db) : user_database(u_db), message_database(m_db)
 		{
 			InitializeComponent();
 			//
@@ -58,6 +58,7 @@ namespace Komunikator1 {
 		Main^ main_form;
 		Register^ register_form;
 		UserDatabase^ user_database;
+		MessageDatabase^ message_database;
 
 
 	private:
@@ -193,7 +194,7 @@ namespace Komunikator1 {
 			User^ user = gcnew User;
 			if (user_database->find_user(user_name, password, user))
 			{
-				main_form = gcnew Main(user_database);
+				main_form = gcnew Main(user_database, message_database, user);
 				this->Hide();
 				main_form->ShowDialog();
 				this->Close();

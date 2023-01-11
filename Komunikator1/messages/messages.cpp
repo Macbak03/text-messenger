@@ -7,6 +7,7 @@ using namespace std;
 using namespace System::Data::SQLite;
 using namespace System::Text;
 using namespace msclr::interop;
+using namespace System::Collections::Generic;
 
 MessageDatabase::MessageDatabase(SQLiteConnection^db) : DB(db) {}
 
@@ -25,17 +26,16 @@ void MessageDatabase::create_message_table() {
     exec.ExecuteNonQuery();
 }
 
-Message MessageDatabase::save_message(Message message) {
-    string raw_sql = "insert into messages values('" + message.sender + "', '" + message.recipient + "', '" + message.message + "', '" +
-                 message.date + "');";
-    System::String^ sql = gcnew System::String(raw_sql.c_str());
+Message^ MessageDatabase::save_message(Message^ message) {
+    System::String^ sql = "insert into messages values('" + message->sender + "', '" + message->recipient + "', '" + message->message + "', '" +
+                 message->date + "');";
     SQLiteCommand exec(sql, DB);
     exec.ExecuteNonQuery();
     return message;
 }
 
-vector<Message> MessageDatabase::get_messages(const string& user, const string& interlocutor) {
-    string raw_sql = "SELECT * FROM MESSAGES "
+List<Message^>^ MessageDatabase::get_messages(System::String^ user, System::String^ interlocutor) {
+    System::String^ sql = "SELECT * FROM MESSAGES "
                  "where sender = '" +
                  user +
                  "' "
@@ -48,24 +48,23 @@ vector<Message> MessageDatabase::get_messages(const string& user, const string& 
                  "and sender = '" +
                  interlocutor +
                  "';";
-    System::String^ sql = gcnew System::String(raw_sql.c_str());
     SQLiteCommand exec(sql, DB);
     SQLiteDataReader^ rdr = exec.ExecuteReader();
-    auto messages = vector<Message>();
+    List<Message^>^ messages;
     while (rdr->Read())
     {
-        Message message;
-        message.sender = marshal_as<std::string>(rdr->GetString(0));
-        message.recipient = marshal_as<std::string>(rdr->GetString(1));
-        message.message = marshal_as<std::string>(rdr->GetString(2));
-        message.date = marshal_as<std::string>(rdr->GetString(3));
-        messages.push_back(message);
+        Message^ message;
+        message->sender = rdr->GetString(0);
+        message->recipient = rdr->GetString(1);
+        message->message = rdr->GetString(2);
+        message->date = rdr->GetString(3);
+        messages->Add(message);
     }
     return messages;
 }
 
-vector<string> MessageDatabase::get_interlocutors(const std::string& user) {
-    string raw_sql = "select distinct RECIPIENT as interlocutor from MESSAGES "
+List<System::String^>^MessageDatabase::get_interlocutors(System::String^ user) {
+    System::String^ sql = "select distinct RECIPIENT as interlocutor from MESSAGES "
                  "where SENDER = '" +
                   user +
                  "' "
@@ -73,13 +72,12 @@ vector<string> MessageDatabase::get_interlocutors(const std::string& user) {
                  "where RECIPIENT = '" +
                   user +
                  "';";
-    System::String^ sql = gcnew System::String(raw_sql.c_str());
     SQLiteCommand exec(sql, DB);
     SQLiteDataReader^ rdr = exec.ExecuteReader();
-    auto interlocutors = vector<string>();
+    List<System::String^>^ interlocutors = gcnew List<System::String^>;
     while (rdr->Read())
     {
-        interlocutors.push_back(marshal_as<std::string>(rdr->GetString(0)));
+        interlocutors->Add(rdr->GetString(0));
     }
     return interlocutors;
 }
