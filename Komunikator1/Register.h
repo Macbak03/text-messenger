@@ -26,6 +26,7 @@ namespace Komunikator1 {
 		Register(UserDatabase^ u_db, MessageDatabase^ m_db) : user_database(u_db), message_database(m_db)
 		{
 			InitializeComponent();
+			this->CenterToParent();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -44,19 +45,13 @@ namespace Komunikator1 {
 		}
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::TextBox^ tbName;
-	protected:
-
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::TextBox^ tbSurname;
-
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::TextBox^ tbLogin;
-
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::TextBox^ tbPassword;
-
 	private: System::Windows::Forms::Button^ Regg;
-
 	private: System::Windows::Forms::Button^ Back;
 
 	private:

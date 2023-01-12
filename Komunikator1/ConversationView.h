@@ -28,7 +28,8 @@ namespace Komunikator1 {
 			InitializeComponent();
 			List<UserMessage^>^ messages = message_database->get_messages(user->login, ilc);
 			for each (UserMessage ^ message in messages)
-				this->lbConversation->Items->Add(message->message+"\n");
+				this->lbConversation->Items->Add(message->date + " " + message->sender + " sent: " + message->message + "\n");
+			this->CenterToParent();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -177,6 +178,8 @@ namespace Komunikator1 {
 			user_message->sender = user->login;
 			user_message->date = date;
 			message_database->save_message(user_message);
+			this->lbConversation->Items->Add(date + " " + user->login + " sent: " + mess + "\n");
+			this->tbMessage->Clear();
 			
 		}
 		catch (Exception^ e)

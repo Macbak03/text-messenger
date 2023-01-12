@@ -24,8 +24,9 @@ namespace Komunikator1 {
 		Main(UserDatabase^ u_db, MessageDatabase^ m_db, User^ user) : user_database(u_db), message_database(m_db), user(user)
 		{
 			InitializeComponent();
-			List<System::String^>^ intorlocutors = message_database->get_interlocutors(user->login);
+			intorlocutors = message_database->get_interlocutors(user->login);
 			this->tbChooseFromUsers->Items->AddRange(intorlocutors->ToArray());
+			this->CenterToParent();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -57,6 +58,7 @@ namespace Komunikator1 {
 		UserDatabase^ user_database;
 		MessageDatabase^ message_database;
 		User^ user;
+		List<System::String^>^ intorlocutors;
 		
 
 	private:
@@ -185,14 +187,19 @@ namespace Komunikator1 {
 		System::String^ add = this->tbAddUser->Text;
 		try
 		{
-			User^ user = gcnew User;
-			if (user_database->find_user(add, user))
-			{
-				this->tbChooseFromUsers->Items->Add(user->login);
+			if(this->tbChooseFromUsers->Items->Contains(add)) {
+				MessageBox::Show("User already added \"" + add + "\"", "Couldn't add user", MessageBoxButtons::OK);
 			}
-			else
-			{
-				MessageBox::Show("Couldn't find user with login \""+add+"\"", "User not found", MessageBoxButtons::OK);
+			else {
+				User^ user = gcnew User;
+				if (user_database->find_user(add, user))
+				{
+					this->tbChooseFromUsers->Items->Add(user->login);
+				}
+				else
+				{
+					MessageBox::Show("Couldn't find user with login \"" + add + "\"", "User not found", MessageBoxButtons::OK);
+				}
 			}
 		}
 		catch (Exception^ e)
