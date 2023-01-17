@@ -20,6 +20,8 @@ public:
 
     void create_table() override;
 
+    void delete_user(User^ user);
+
     bool find_user(System::String^ login, System::String^ password, User^ user);
 
     User^ save_user(User^ user);

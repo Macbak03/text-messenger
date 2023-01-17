@@ -21,6 +21,15 @@ void UserDatabase::create_table() {
     exec.ExecuteNonQuery();
 }
 
+void UserDatabase::delete_user(User^ user)
+{
+    System::String^ sql = "DELETE from users "
+        "where login = '" +
+        user->login +
+        "';";
+    SQLiteCommand exec(sql, DB);
+    exec.ExecuteNonQuery();
+}
 
 bool UserDatabase::find_user(System::String^ login, System::String^ password, User^ user) {
     System::String^ sql = "select * from users "
