@@ -9,9 +9,9 @@ using namespace System::Text;
 using namespace msclr::interop;
 using namespace System::Collections::Generic;
 
-UserDatabase::UserDatabase(SQLiteConnection^ db) : DB(db) {}
+UserDatabase::UserDatabase(SQLiteConnection^ db) : DatabaseTable(db) {}
 
-void UserDatabase::create_user_table() {
+void UserDatabase::create_table() {
     System::String^ sql = "CREATE TABLE IF NOT EXISTS USERS("
                  "LOGIN    TEXT PRIMARY KEY NOT NULL, "
                  "PASSWORD TEXT             NOT NULL, "

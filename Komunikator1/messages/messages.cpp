@@ -9,12 +9,12 @@ using namespace System::Text;
 using namespace msclr::interop;
 using namespace System::Collections::Generic;
 
-MessageDatabase::MessageDatabase(SQLiteConnection^db) : DB(db) {}
+MessageDatabase::MessageDatabase(SQLiteConnection^db) : DatabaseTable(db) {}
 
 
 
 
-void MessageDatabase::create_message_table() {
+void MessageDatabase::create_table() {
     System::String^ sql = "CREATE TABLE IF NOT EXISTS MESSAGES("
                  "SENDER    TEXT  NOT NULL, "
                  "RECIPIENT TEXT  NOT NULL, "

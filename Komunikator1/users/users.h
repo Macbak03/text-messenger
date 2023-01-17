@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "../DatabaseTable.h"
 
 using namespace System::Data::SQLite;
 using namespace System::Text;
@@ -13,14 +14,11 @@ public ref struct User {
     System::String^ surname;
 };
 
-public ref class UserDatabase {
-private:
-    SQLiteConnection^ DB;
-
+public ref class UserDatabase : public DatabaseTable{
 public:
     explicit UserDatabase(SQLiteConnection^ db);
 
-    void create_user_table();
+    void create_table() override;
 
     bool find_user(System::String^ login, System::String^ password, User^ user);
 

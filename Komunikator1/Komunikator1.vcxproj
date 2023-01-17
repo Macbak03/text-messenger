@@ -139,6 +139,7 @@
     <ClInclude Include="ConversationView.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="DatabaseTable.h" />
     <ClInclude Include="Main.h">
       <FileType>CppForm</FileType>
     </ClInclude>
