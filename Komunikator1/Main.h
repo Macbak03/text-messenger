@@ -59,7 +59,12 @@ namespace Komunikator1 {
 		MessageDatabase^ message_database;
 		User^ user;
 		List<System::String^>^ intorlocutors;
-		
+	private: System::Windows::Forms::MenuStrip^ menuStrip1;
+	private: System::Windows::Forms::ToolStripMenuItem^ accountToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ logOutToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ deleteAcountToolStripMenuItem;
+	private: System::Windows::Forms::Label^ label3;
+
 
 	private:
 		/// <summary>
@@ -81,23 +86,26 @@ namespace Komunikator1 {
 			this->Select = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->Add = (gcnew System::Windows::Forms::Button());
+			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->accountToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->logOutToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->deleteAcountToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
-			//label1
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(178, 9);
+			this->label1->Location = System::Drawing::Point(201, 53);
 			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(49, 13);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Add user";
-			//tbAddUser
-			this->tbAddUser->Location = System::Drawing::Point(91, 25);
+			this->tbAddUser->Location = System::Drawing::Point(116, 68);
 			this->tbAddUser->Margin = System::Windows::Forms::Padding(2);
 			this->tbAddUser->Name = L"tbAddUser";
 			this->tbAddUser->Size = System::Drawing::Size(216, 20);
 			this->tbAddUser->TabIndex = 1;
 			this->tbAddUser->TextChanged += gcnew System::EventHandler(this, &Main::tbAddUser_change_text);
-			//LogOut
 			this->LogOut->Location = System::Drawing::Point(359, 19);
 			this->LogOut->Margin = System::Windows::Forms::Padding(2);
 			this->LogOut->Name = L"LogOut";
@@ -105,19 +113,17 @@ namespace Komunikator1 {
 			this->LogOut->TabIndex = 2;
 			this->LogOut->Text = L"Log out";
 			this->LogOut->UseVisualStyleBackColor = true;
-			this->LogOut->Click += gcnew System::EventHandler(this, &Main::LogOut_Click);
-			//tbChooseFromUsers
+			//this->LogOut->Click += gcnew System::EventHandler(this, &Main::LogOut_Click);
 			this->tbChooseFromUsers->FormattingEnabled = true;
-			this->tbChooseFromUsers->Location = System::Drawing::Point(63, 109);
+			this->tbChooseFromUsers->Location = System::Drawing::Point(82, 138);
 			this->tbChooseFromUsers->Margin = System::Windows::Forms::Padding(2);
 			this->tbChooseFromUsers->Name = L"tbChooseFromUsers";
 			this->tbChooseFromUsers->Size = System::Drawing::Size(272, 186);
 			this->tbChooseFromUsers->TabIndex = 3;
-			this->tbChooseFromUsers->DoubleClick += gcnew System::EventHandler(this, &Main::tbChooseFromUsers_DoubleClick);
 			this->tbChooseFromUsers->SelectedIndexChanged += gcnew System::EventHandler(this, &Main::tbChooseFromUsers_SelectedIndexChanged);
-			//Select
+			this->tbChooseFromUsers->DoubleClick += gcnew System::EventHandler(this, &Main::tbChooseFromUsers_DoubleClick);
 			this->Select->Enabled = false;
-			this->Select->Location = System::Drawing::Point(137, 299);
+			this->Select->Location = System::Drawing::Point(158, 328);
 			this->Select->Margin = System::Windows::Forms::Padding(2);
 			this->Select->Name = L"Select";
 			this->Select->Size = System::Drawing::Size(126, 27);
@@ -125,27 +131,50 @@ namespace Komunikator1 {
 			this->Select->Text = L"Select";
 			this->Select->UseVisualStyleBackColor = true;
 			this->Select->Click += gcnew System::EventHandler(this, &Main::Select_Click);
-			//label2
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(145, 94);
+			this->label2->Location = System::Drawing::Point(175, 123);
 			this->label2->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(94, 13);
 			this->label2->TabIndex = 5;
 			this->label2->Text = L"Choose from users";
-			//Add
 			this->Add->Enabled = false;
-			this->Add->Location = System::Drawing::Point(137, 50);
+			this->Add->Location = System::Drawing::Point(158, 93);
 			this->Add->Name = L"Add";
 			this->Add->Size = System::Drawing::Size(126, 27);
 			this->Add->TabIndex = 6;
 			this->Add->Text = L"Add";
 			this->Add->UseVisualStyleBackColor = true;
 			this->Add->Click += gcnew System::EventHandler(this, &Main::Add_Click);
-			//Main
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->accountToolStripMenuItem });
+			this->menuStrip1->Location = System::Drawing::Point(0, 0);
+			this->menuStrip1->Name = L"menuStrip1";
+			this->menuStrip1->Size = System::Drawing::Size(450, 24);
+			this->menuStrip1->TabIndex = 7;
+			this->menuStrip1->Text = L"menuStrip1";
+			this->accountToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->logOutToolStripMenuItem,
+					this->deleteAcountToolStripMenuItem
+			});
+			this->accountToolStripMenuItem->Name = L"accountToolStripMenuItem";
+			this->accountToolStripMenuItem->Size = System::Drawing::Size(64, 20);
+			this->accountToolStripMenuItem->Text = L"Account";
+			this->logOutToolStripMenuItem->Name = L"logOutToolStripMenuItem";
+			this->logOutToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->logOutToolStripMenuItem->Text = L"Log out";
+			this->logOutToolStripMenuItem->Click += gcnew System::EventHandler(this, &Main::logOutToolStripMenuItem_Click);
+			this->deleteAcountToolStripMenuItem->Name = L"deleteAcountToolStripMenuItem";
+			this->deleteAcountToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->deleteAcountToolStripMenuItem->Text = L"Delete acount";
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(183, 32);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(0, 13);
+			this->label3->TabIndex = 8;
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(450, 353);
+			this->ClientSize = System::Drawing::Size(450, 413);
+			this->Controls->Add(this->label3);
 			this->Controls->Add(this->Add);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->Select);
@@ -153,16 +182,20 @@ namespace Komunikator1 {
 			this->Controls->Add(this->LogOut);
 			this->Controls->Add(this->tbAddUser);
 			this->Controls->Add(this->label1);
+			this->Controls->Add(this->menuStrip1);
+			this->MainMenuStrip = this->menuStrip1;
 			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"Main";
 			this->Text = L"Main";
+			this->menuStrip1->ResumeLayout(false);
+			this->menuStrip1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 	
-	private: System::Void LogOut_Click(System::Object^ sender, System::EventArgs^ e);
+	//private: System::Void LogOut_Click(System::Object^ sender, System::EventArgs^ e);
 
 	private: System::Void Select_Click(System::Object^ sender, System::EventArgs^ e) {
 		System::String^ interlocutor = (System::String^)(this->tbChooseFromUsers->SelectedItem);
@@ -218,5 +251,7 @@ namespace Komunikator1 {
 	{
 		Select_Click(sender, e);
 	}
+	private: System::Void logOutToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+
 };
 }

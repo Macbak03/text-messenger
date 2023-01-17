@@ -26,6 +26,15 @@ namespace Komunikator1 {
 		ConversationView(UserDatabase^ u_db, MessageDatabase^ m_db, User^ user, System::String^ ilc) : user_database(u_db), message_database(m_db), user(user), interlocutor(ilc)
 		{
 			InitializeComponent();
+			User^ conv_user = gcnew User;
+			if (user_database->find_user(interlocutor, conv_user))
+			{
+				this->label2->Text = conv_user->name + " " + conv_user->surname;
+			}
+			else
+			{
+				this->label2->Text = L"ERROR";
+			}
 			List<UserMessage^>^ messages = message_database->get_messages(user->login, ilc);
 			for each (UserMessage ^ message in messages)
 				this->lbConversation->Items->Add(message->date + " " + message->sender + " sent: " + message->message + "\n");
@@ -111,9 +120,8 @@ namespace Komunikator1 {
 			this->label2->Location = System::Drawing::Point(224, 28);
 			this->label2->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(69, 13);
+			this->label2->Size = System::Drawing::Size(60, 13);
 			this->label2->TabIndex = 4;
-			this->label2->Text = L"Conversation";
 			//Send
 			this->Send->Location = System::Drawing::Point(199, 268);
 			this->Send->Name = L"Send";
