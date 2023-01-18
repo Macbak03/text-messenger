@@ -239,7 +239,11 @@ namespace Komunikator1 {
 	}
 	private: System::Void tbChooseFromUsers_DoubleClick(System::Object^ sender,System::EventArgs^ e)
 	{
-		Select_Click(sender, e);
+		if (tbChooseFromUsers->SelectedItems->Count > 0)
+		{
+			Select_Click(sender, e);
+		}
+		
 	}
 	private: System::Void logOutToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
 

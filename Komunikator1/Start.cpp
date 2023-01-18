@@ -4,7 +4,9 @@ using namespace System::Windows::Forms;
 using namespace System::Data::SQLite;
 using namespace System::Text;
 
-
+//To do:
+//przesuwanie konwersacji na dol
+//odswierzanie w czasie rzeczywistim
 [STAThread]
 void main(array<String^>^ args)
 {

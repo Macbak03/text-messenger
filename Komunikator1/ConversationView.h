@@ -38,6 +38,7 @@ namespace Komunikator1 {
 			List<UserMessage^>^ messages = message_database->get_messages(user->login, ilc);
 			for each (UserMessage ^ message in messages)
 				this->lbConversation->Items->Add(message->date + " " + message->sender + " sent: " + message->message + "\n");
+			this->lbConversation->TopIndex =  1;
 			this->CenterToParent();
 			//
 			//TODO: Add the constructor code here
@@ -159,8 +160,6 @@ namespace Komunikator1 {
 
 		}
 #pragma endregion
-	private: System::Void TextBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
 	private: System::Void Return_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void tbMessage_change_text(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -186,7 +185,7 @@ namespace Komunikator1 {
 			user_message->sender = user->login;
 			user_message->date = date;
 			message_database->save_message(user_message);
-			this->lbConversation->Items->Add(date + " " + user->login + " sent: " + mess + "\n");
+			lbConversation->TopIndex = lbConversation->Items->Add(date + " " + user->login + " sent: " + mess + "\n");
 			this->tbMessage->Clear();
 			
 		}

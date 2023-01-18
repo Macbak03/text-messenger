@@ -46,31 +46,6 @@ UserMessage^ MessageDatabase::save_message(UserMessage^ message) {
     return message;
 }
 
-UserMessage^ MessageDatabase::find_messages(UserMessage^ user_message) {
-    System::String^ sql = "SELECT * FROM MESSAGES "
-                 "where sender = '" +
-                 user_message->sender +
-                 "' "
-                 "and recipient = '" +
-                 user_message->recipient +
-                 "'"
-                 "or recipient = '" +
-                 user_message->sender +
-                 "' "
-                 "and sender = '" +
-                 user_message->recipient +
-                 "';";
-    SQLiteCommand exec(sql, DB);
-    SQLiteDataReader^ rdr = exec.ExecuteReader();
-    while (rdr->Read())
-    {
-        user_message->sender = rdr->GetString(0);
-        user_message->recipient = rdr->GetString(1);
-        user_message->message = rdr->GetString(2);
-        user_message->date = rdr->GetString(3);
-    }
-    return user_message;
-}
 
 List<UserMessage^>^ MessageDatabase::get_messages(System::String^ user, System::String^ interlocutor) {
     System::String^ sql = "SELECT * FROM MESSAGES "
