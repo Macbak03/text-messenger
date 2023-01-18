@@ -11,6 +11,9 @@ namespace Komunikator1 {
 		System::Windows::Forms::DialogResult dialog_result = MessageBox::Show("Delete account?", "Delete account", MessageBoxButtons::YesNo);
 		if (dialog_result == System::Windows::Forms::DialogResult::Yes)
 		{
+			UserMessage^ user_message = gcnew UserMessage;
+			List<UserMessage^>^ messages = message_database->get_messages(user->login, user_message->recipient);
+			message_database->delete_messages(user_message);
 			user_database->delete_user(user);
 			start_form = gcnew Start(user_database, message_database);
 			this->Hide();

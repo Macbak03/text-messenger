@@ -26,6 +26,18 @@ void MessageDatabase::create_table() {
     exec.ExecuteNonQuery();
 }
 
+void MessageDatabase::delete_messages(UserMessage^ user_message) {
+    System::String^ sql ="DELETE from messages "
+                 "where sender = '" +
+                 user_message->sender +
+                 "' "
+                 "and recipient = '" +
+                 user_message->sender +
+                 "'; ";
+    SQLiteCommand exec(sql, DB);
+    exec.ExecuteNonQuery();
+}
+
 UserMessage^ MessageDatabase::save_message(UserMessage^ message) {
     System::String^ sql = "insert into messages values('" + message->sender + "', '" + message->recipient + "', '" + message->message + "', '" +
                  message->date + "');";
