@@ -18,7 +18,7 @@ public ref class MessageDatabase : public DatabaseTable {
 public:
     explicit MessageDatabase(SQLiteConnection^db);
     void create_table() override;
-    void delete_messages(UserMessage^ user_message);
+    void delete_messages(System::String^ login);
     UserMessage^ find_messages(UserMessage^ user_message);
     UserMessage^ save_message(UserMessage^ message);
     List <UserMessage^>^ get_messages(System::String^ user, System::String^ interlocutor);
