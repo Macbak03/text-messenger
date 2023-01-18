@@ -32,8 +32,14 @@ void MessageDatabase::delete_messages(UserMessage^ user_message) {
                  user_message->sender +
                  "' "
                  "and recipient = '" +
+                 user_message->recipient +
+                 "'"
+                 "or recipient = '" +
                  user_message->sender +
-                 "'; ";
+                 "' "
+                 "and sender = '" +
+                 user_message->recipient +
+                 "';";
     SQLiteCommand exec(sql, DB);
     exec.ExecuteNonQuery();
 }
