@@ -2,6 +2,7 @@
 #include "users.h"
 #include "messages.h"
 #include <msclr\marshal_cppstd.h>
+#include <math.h>
 
 
 namespace Komunikator1 {
@@ -38,7 +39,7 @@ namespace Komunikator1 {
 			List<UserMessage^>^ messages = message_database->get_messages(user->login, ilc);
 			for each (UserMessage ^ message in messages)
 				this->lbConversation->Items->Add(message->date + " " + message->sender + " sent: " + message->message + "\n");
-			this->lbConversation->TopIndex =  1;
+			this->lbConversation->TopIndex = -1;
 			this->CenterToParent();
 			//
 			//TODO: Add the constructor code here
